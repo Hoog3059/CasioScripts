@@ -1,0 +1,167 @@
+'ProgramMode:RUN
+
+'Real code starts here
+
+#Region Variables
+'Variables:
+'A: Counter to update screen
+'B: The direction the snake has
+'C: The currently pressed key
+'D: The lenght of the worm
+'P: The X-cord of the food
+'Q: The Y-cord of the food
+'X: The X-cord of the head of the snake
+'Y: The Y-cord of the head of the snake
+'Z: The number the counter has to be to update the screen
+'Mat A: The previous cords of the bodyparts of the snake
+'Mat B: A placeholder for the new Mat A
+
+Lbl 3
+ClrText
+'WormHeadPos
+3->X
+3->Y
+
+'FoodPos
+7->P
+7->Q
+
+'Worm Length
+3->D
+
+'Direction: N:0 E:1 Z:2 W:3
+2->B
+
+'counter
+0->A
+10->Z
+
+'previous positions
+{50,2}->Dim Mat A
+{50,2}->Dim Mat B
+3->Mat A[1,1]
+3->Mat A[1,2]
+3->Mat A[2,1]
+2->Mat A[2,2]
+3->Mat A[3,1]
+1->Mat A[3,2]
+
+#End Region
+
+#Region Gameloop
+'Menu screen
+Lbl 1
+Locate 1,1,"---------------------"
+Locate 8,2,"Snakio!"
+Locate 1,3,"---------------------"
+Locate 2,4,"EXE: Start"
+Locate 1,7,"By Hoog3059"
+While 0=0
+    Getkey->C
+    If C=31
+    Then Goto 2
+    IfEnd
+WhileEnd
+
+Lbl 2
+ClrText
+For 1->I To D-1
+Locate Mat A[I,1],Mat A[I,2],"_#E6A6_"
+Next
+While 0=0
+    'Find direction
+    Getkey->C
+
+    If C=28
+        Then 0->B
+    IfEnd
+
+    If C=27
+        Then 1->B
+    IfEnd
+
+    If C=37
+        Then 2->B
+    IfEnd
+
+    If C=38
+        Then 3->B
+    IfEnd
+
+    A+1->A
+    If A=Z
+        Then 
+            0->A
+
+            If B=0
+            Then 
+                If Y-1<1
+                    Then 7->Y
+                Else Y-1->Y
+                IfEnd
+            IfEnd
+
+            If B=1
+            Then 
+                If X+1>21
+                    Then 1->X
+                Else X+1->X
+                IfEnd
+            IfEnd
+
+            If B=2
+            Then 
+                If Y+1>7
+                    Then 1->Y
+                Else Y+1->Y
+                IfEnd
+            IfEnd
+
+            If B=3
+            Then 
+                If X-1<1
+                    Then 21->X
+                Else X-1->X
+                IfEnd
+            IfEnd            
+
+            'Print head snake
+            Locate X,Y,"_#E6A6_"
+            'Remove tail snake
+            Locate Mat A[D,1],Mat A[D,2]," "
+            'Print score
+            Locate 1,1,(D-3)*10
+
+            'Check if snake ate food
+            If X=P And Y=Q
+            Then 
+                D+1->D
+                'Update screen-update time
+                If 13-D<1
+                Then 1->Z
+                Else 13-D->Z
+                IfEnd
+                'Generate new food cords
+                RanInt#(1,21)->P
+                RanInt#(1,7)->Q
+            Else Locate P,Q,"o"
+            IfEnd
+            
+            'Make new Mat A
+            For 1->I To D-1
+            Mat A[I,1]->Mat B[I+1,1]
+            Mat A[I,2]->Mat B[I+1,2]
+
+            'Check for collision
+            If X=Mat A[I,1] And Y=Mat A[I,2]
+            Then 
+            Menu "YOU LOSE!","OH NO",3,"CRAP",3
+            IfEnd
+            Next
+
+            Mat B->Mat A
+            X->Mat A[1,1]
+            Y->Mat A[1,2]                        
+    IfEnd
+WhileEnd
+#End Region

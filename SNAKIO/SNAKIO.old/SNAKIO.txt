@@ -1,0 +1,147 @@
+'ProgramMode:RUN
+
+'Real code starts here
+
+#Region Variables
+
+Lbl 3
+ClrText
+'WormHeadPos
+3->X
+3->Y
+
+'FoodPos
+7->P
+7->Q
+
+'Worm Length
+3->D
+
+'Direction: N:0 E:1 Z:2 W:3
+2->B
+
+'counter
+0->A
+
+'previous positions
+{10,2}->Dim Mat A
+3->Mat A[1,1]
+3->Mat A[1,2]
+3->Mat A[2,1]
+2->Mat A[2,2]
+3->Mat A[3,1]
+1->Mat A[3,2]
+
+#End Region
+
+#Region Gameloop
+'Menu screen
+Lbl 1
+Locate 1,1,"---------------------"
+Locate 8,2,"Snakio!"
+Locate 1,3,"---------------------"
+Locate 2,4,"EXE: Start"
+Locate 1,7,"By Hoog3059"
+While 0=0
+    Getkey->C
+    If C=31
+    Then Goto 2
+    IfEnd
+WhileEnd
+
+'Gameloop Updates every 10 clock times
+Lbl 2
+While 0=0
+    If D=10
+    Then 
+    Menu "YOU WIN!","YAHEE!",3,"AWESOME!",3
+    IfEnd
+
+    'Find direction
+    Getkey->C
+
+    If C=28
+        Then 0->B
+    IfEnd
+
+    If C=27
+        Then 1->B
+    IfEnd
+
+    If C=37
+        Then 2->B
+    IfEnd
+
+    If C=38
+        Then 3->B
+    IfEnd
+
+    A+1->A
+    If A=13-D
+        Then 
+            0->A
+            ClrText
+
+            If B=0
+            Then 
+                If Y-1<1
+                    Then 7->Y
+                Else Y-1->Y
+                IfEnd
+            IfEnd
+
+            If B=1
+            Then 
+                If X+1>21
+                    Then 1->X
+                Else X+1->X
+                IfEnd
+            IfEnd
+
+            If B=2
+            Then 
+                If Y+1>7
+                    Then 1->Y
+                Else Y+1->Y
+                IfEnd
+            IfEnd
+
+            If B=3
+            Then 
+                If X-1<1
+                    Then 21->X
+                Else X-1->X
+                IfEnd
+            IfEnd
+
+            If X=P And Y=Q
+            Then 
+                D+1->D
+                RanInt#(1,21)->P
+                RanInt#(1,7)->Q
+            Else Locate P,Q,"o"
+            IfEnd
+
+            'Print score
+            Locate 1,1,(D-3)*10
+
+            Locate X,Y,"_#E6A6_"
+
+            {10,2}->Dim Mat B
+            For 1->I To D-1
+            Locate Mat A[I,1],Mat A[I,2],"_#E6A6_"
+            Mat A[I,1]->Mat B[I+1,1]
+            Mat A[I,2]->Mat B[I+1,2]
+
+            If X=Mat A[I,1] And Y=Mat A[I,2]
+            Then 
+            Menu "YOU LOSE!","OH NO",3,"CRAP",3
+            IfEnd
+            Next
+
+            Mat B->Mat A
+            X->Mat A[1,1]
+            Y->Mat A[1,2]
+    IfEnd
+WhileEnd
+#End Region

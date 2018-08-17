@@ -1,0 +1,162 @@
+'ProgramMode:RUN
+Lbl 3
+ClrText
+Locate 1,1,"---------------------"
+Locate 9,2,"PONG!"
+Locate 1,3,"---------------------"
+Locate 2,4,"EXE: Start"
+Locate 2,5,"Controls: P1 7//\\ 1\\//"
+Locate 12,6,"P2 9//\\ 3\\//"
+Locate 1,7,"By Hoog3059"
+While 0=0
+Getkey->C
+If C=31
+Then Break
+IfEnd
+WhileEnd
+ClrText
+11->X
+5->Y
+1->A
+7->B
+21->P
+7->Q
+1->D
+Lbl 1
+Getkey->C
+If C=74
+Then 
+If B-3>0
+Then 
+Locate A,B," "
+B-1->B
+IfEnd
+IfEnd
+If C=72
+Then 
+If B+1<8
+Then 
+Locate A,B-2," "
+B+1->B
+IfEnd
+IfEnd
+If C=54
+Then 
+If Q-3>0
+Then 
+Locate P,Q," "
+Q-1->Q
+IfEnd
+IfEnd
+If C=52
+Then 
+If Q+1<8
+Then 
+Locate P,Q-2," "
+Q+1->Q
+IfEnd
+IfEnd
+Locate A,B,"_#E6A6_"
+Locate A,B-1,"_#E6A6_"
+Locate A,B-2,"_#E6A6_"
+Locate P,Q,"_#E6A6_"
+Locate P,Q-1,"_#E6A6_"
+Locate P,Q-2,"_#E6A6_"
+If X-1=1
+Then 
+If Y=B Or Y=B-1 Or Y=B-2
+Then 
+If Y=B
+Then 2->D
+IfEnd
+If Y=B-1
+Then 1->D
+IfEnd
+If Y=B-2
+Then 0->D
+IfEnd
+IfEnd
+IfEnd
+If X+1=21
+Then 
+If Y=Q Or Y=Q-1 Or Y=Q-2
+Then 
+If Y=Q
+Then 3->D
+IfEnd
+If Y=Q-1
+Then 4->D
+IfEnd
+If Y=Q-2
+Then 5->D
+IfEnd
+IfEnd
+IfEnd
+Locate X,Y," "
+If D=0
+Then 
+If Y-1<1
+Then 
+2->D
+Y+1->Y
+Else 
+Y-1->Y
+IfEnd
+X+1->X
+Goto 2
+IfEnd
+If D=2
+Then 
+If Y+1>7
+Then 
+0->D
+Y-1->Y
+Else 
+Y+1->Y
+IfEnd
+X+1->X
+Goto 2
+IfEnd
+If D=3
+Then 
+If Y+1>7
+Then 
+5->D
+Y-1->Y
+Else 
+Y+1->Y
+IfEnd
+X-1->X
+Goto 2
+IfEnd
+If D=5
+Then 
+If Y-1<1
+Then 
+3->D
+Y+1->Y
+Else 
+Y-1->Y
+IfEnd
+X-1->X
+Goto 2
+IfEnd
+If D=1
+Then 
+X+1->X
+Goto 2
+IfEnd
+If D=4
+Then 
+X-1->X
+Goto 2
+IfEnd
+Lbl 2
+Locate X,Y,"_#E6A6_"
+If X=1
+Then Menu "P1 lost","Fuck!",3,"Damn!",3
+IfEnd
+If X=21
+Then Menu "P2 lost","Fuck!",3,"Damn!",3
+IfEnd
+Goto 1

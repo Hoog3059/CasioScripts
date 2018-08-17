@@ -1,0 +1,100 @@
+'ProgramMode:RUN
+"      7 _#E6A6_ 8 _#E6A6_ 9 "
+"    _#E6A6__#E6A6__#E6A6__#E6A6__#E6A6__#E6A6__#E6A6__#E6A6__#E6A6__#E6A6__#E6A6__#E6A6__#E6A6_   "
+"      4 _#E6A6_ 5 _#E6A6_ 6 "
+"    _#E6A6__#E6A6__#E6A6__#E6A6__#E6A6__#E6A6__#E6A6__#E6A6__#E6A6__#E6A6__#E6A6__#E6A6__#E6A6_   "
+"      1 _#E6A6_ 2 _#E6A6_ 3 "
+""
+"Current: X  "
+{3,3}->Dim Mat A
+Fill(0,Mat A)
+1->P
+Lbl 1
+0->C
+0->X
+0->Y
+While 0=0
+Getkey->C
+'1
+If C=72
+Then 
+1->X
+3->Y
+Goto 2
+IfEnd
+'2
+If C=62
+Then 
+2->X
+3->Y
+Goto 2
+IfEnd
+'3
+If C=52
+Then 
+3->X
+3->Y
+Goto 2
+IfEnd
+'4
+If C=73
+Then 
+1->X
+2->Y
+Goto 2
+IfEnd
+'5
+If C=63
+Then 
+2->X
+2->Y
+Goto 2
+IfEnd
+'6
+If C=53
+Then 
+3->X
+2->Y
+Goto 2
+IfEnd
+'7
+If C=74
+Then 
+1->X
+1->Y
+Goto 2
+IfEnd
+'8
+If C=64
+Then 
+2->X
+1->Y
+Goto 2
+IfEnd
+'9
+If C=54
+Then 
+3->X
+1->Y
+Goto 2
+IfEnd
+WhileEnd
+Lbl 2
+If Mat A[Y,X]=1 Or Mat A[Y,X]=2
+Then 
+Locate 1,6,"Taken"
+Goto 1
+IfEnd
+P->Mat A[Y,X]
+If P=1
+Then 
+Locate 3+X*4,Y+Y-1,"X"
+Locate 10,7,"O"
+2->P
+Else 
+Locate 3+X*4,Y+Y-1,"O"
+Locate 10,7,"X"
+Locate 1,6,"     "
+1->P
+IfEnd
+Goto 1
