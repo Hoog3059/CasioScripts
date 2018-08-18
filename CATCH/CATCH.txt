@@ -1,0 +1,38 @@
+'ProgramMode:RUN
+10->X
+7->Y
+
+1->D
+{10,2}->Dim Mat A
+1->Mat A[1,1]
+1->Mat A[1,2]
+
+While 0=0
+    0->K
+    While K<10
+        K+1->K
+    WhileEnd
+
+    Locate X,Y," "
+
+    Getkey->C
+    If C=38
+    Then X-1->X
+    IfEnd
+    If C=27
+    Then X+1->X
+    IfEnd
+
+    Locate X,Y,"_#E6A6_"
+
+    For 1->I To D
+        Locate Mat A[I,1],Mat A[I,2]," "
+        If Mat A[I,2]+1>7
+        Then 
+            1->Mat A[I,2]
+        Else 
+            Mat A[I,2]+1->Mat A[I,2]
+            Locate Mat A[I,1],Mat A[I,2],"_#E6A6_"
+        IfEnd        
+    Next
+WhileEnd
